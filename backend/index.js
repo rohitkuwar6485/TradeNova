@@ -21,17 +21,26 @@ const allowedOrigins = [
   process.env.DASHBOARD_URL
 ];
 
-app.use(cors({
+const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin) return callback(null, true); // allow requests with no origin (e.g. Postman)
+    console.log("CORS request from origin:", origin); // optional debug
+    if (!origin) return callback(null, true); // allow Postman / same-origin
     if (allowedOrigins.includes(origin)) {
-      callback(null, true); // allow this origin
+      callback(null, true); // allowed origin
     } else {
-      callback(new Error('Not allowed by CORS')); // block others
+      callback(null, false); // blocked origin
     }
   },
-  credentials: true, // allow cookies
-}));
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,          // allow cookies / authentication headers
+  optionsSuccessStatus: 200   // for legacy browsers
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight OPTIONS requests for all routes
+app.options("*", cors(corsOptions));
 
 // Connect to MongoDB
 const connectDB = async () => {
