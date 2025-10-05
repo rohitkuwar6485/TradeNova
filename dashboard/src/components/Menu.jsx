@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 const Menu = () => {
-  const navigate = useNavigate();
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isLogoHover, setIsLogoHover] = useState(false);
   const [isUserHover, setIsUserHover] = useState(false);
@@ -19,7 +17,7 @@ const Menu = () => {
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
-      navigate(`${import.meta.env.VITE_FRONTEND_URL}/signup`);
+      window.location.href = import.meta.env.VITE_FRONTEND_URL + "/signup";
     }
   };
 
