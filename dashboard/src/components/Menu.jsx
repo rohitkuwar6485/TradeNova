@@ -19,7 +19,7 @@ const Menu = () => {
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
-      navigate("/signup");
+      navigate(`${import.meta.env.VITE_FRONTEND_URL}/signup`);
     }
   };
 
