@@ -1,0 +1,7 @@
+.universe-logo {
+  max-height: 60px; /* adjust as needed */
+  width: auto;
+  display: block;
+  margin: 0 auto; /* centers in column */
+  object-fit: contain;
+}

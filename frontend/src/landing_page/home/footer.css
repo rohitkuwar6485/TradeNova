@@ -1,0 +1,16 @@
+footer a {
+    color: black; /* default text color */
+    text-decoration: none;
+    line-height: 2;
+    margin-bottom: 10px;
+}
+
+footer a:hover {
+  color: rgb(28, 164, 217) !important; /* hover color */
+}
+
+.inside p {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}

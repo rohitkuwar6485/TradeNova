@@ -1,0 +1,20 @@
+.rupees-box {
+  padding: 20px;
+  min-height: 200px; /* optional: keep all boxes roughly equal height */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* text starts below image */
+}
+
+.rupees-box h2 {
+  font-size: 25px;
+  font-weight: 500;
+  margin: 15px 0 10px; /* spacing between image, heading, and paragraph */
+}
+
+.rupees-box p {
+  font-size: 16px;
+  color: #6c757d; /* text-muted equivalent */
+  line-height: 1.5;
+  margin: 10px 0 0 0;;
+}
