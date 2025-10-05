@@ -5,6 +5,7 @@ require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const serverless = require("serverless-http");
 
 //routes required
 const holdingsRoutes = require("./routes/holdingsRoutes.js");
@@ -51,6 +52,7 @@ const connectDB = async () => {
     console.error("Database connection failed:", error);
   }
 };
+connectDB();
 
 //routes
 app.use(express.json());
@@ -63,7 +65,10 @@ app.use("/api", holdingsRoutes);
 app.use("/api", positionsRoutes);
 app.use("/api/user", userRoutes);
 
-app.listen(PORT, () => {
-  console.log(`app listening on port ${PORT}`);
-  connectDB();
-})
+// app.listen(PORT, () => {
+//   console.log(`app listening on port ${PORT}`);
+//   connectDB();
+// })
+
+// Export serverless handler for Vercel
+module.exports.handler = serverless(app);
