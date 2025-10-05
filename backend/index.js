@@ -1,13 +1,10 @@
-//require env
+// require env
 require('dotenv').config();
-
-//express required
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const serverless = require("serverless-http");
 
-//routes required
+// routes
 const holdingsRoutes = require("./routes/holdingsRoutes.js");
 const positionsRoutes = require("./routes/positionsRoutes.js");
 const userRoutes = require("./routes/userRoutes.js");
@@ -15,33 +12,6 @@ const userRoutes = require("./routes/userRoutes.js");
 const app = express();
 const PORT = process.env.PORT || 3002;
 const url = process.env.MONGO_URL;
-
-// Allowed frontend URLs
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  process.env.DASHBOARD_URL
-];
-
-const corsOptions = {
-  origin: (origin, callback) => {
-    console.log("CORS request from origin:", origin); // optional debug
-    if (!origin) return callback(null, true); // allow Postman / same-origin
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true); // allowed origin
-    } else {
-      callback(null, false); // blocked origin
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true,          // allow cookies / authentication headers
-  optionsSuccessStatus: 200   // for legacy browsers
-};
-
-// Apply CORS middleware
-app.use(cors(corsOptions));
-
-// Handle preflight OPTIONS requests for all routes
-app.options("*", cors(corsOptions));
 
 // Connect to MongoDB
 const connectDB = async () => {
@@ -52,23 +22,23 @@ const connectDB = async () => {
     console.error("Database connection failed:", error);
   }
 };
-connectDB();
 
-//routes
+// CORS setup
+app.use(cors({
+  origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL], // allow frontend URLs
+  credentials: true, // allow cookies
+}));
+
+// Parse JSON
 app.use(express.json());
 
-app.get("/", (req,res) => {
-    res.send("API is Working");
-});
-
+// Routes
+app.get("/", (req, res) => res.send("API is Working"));
 app.use("/api", holdingsRoutes);
 app.use("/api", positionsRoutes);
 app.use("/api/user", userRoutes);
 
-// app.listen(PORT, () => {
-//   console.log(`app listening on port ${PORT}`);
-//   connectDB();
-// })
-
-// Export serverless handler for Vercel
-module.exports.handler = serverless(app);
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+  connectDB();
+});

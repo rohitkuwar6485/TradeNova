@@ -20,6 +20,7 @@ const Menu = () => {
       window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/signup`;
     }
   };
+  
 
   const menuItems = [
     { name: "Dashboard", path: "/" },

@@ -101,9 +101,9 @@ exports.logoutUser = async (req, res) => {
     // Clear the token cookie
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production", // true on production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      path: "/",
+      path: "/", // must match cookie path when it was set
     });
 
     return res.json({
@@ -115,4 +115,5 @@ exports.logoutUser = async (req, res) => {
     return res.json({ success: false, message: "Error during logout" });
   }
 };
+
 
