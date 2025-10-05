@@ -17,7 +17,7 @@ const Menu = () => {
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
-      window.location.href = import.meta.env.VITE_FRONTEND_URL + "/signup";
+      window.location.href = import.meta.env.VITE_FRONTEND_URL;
     }
   };
 
